@@ -10,7 +10,7 @@ import ClientShell from "@/components/ClientShell";
 export default function Home() {
   return (
     <ClientShell>
-      <main className="flex min-h-screen flex-col items-center justify-between selection:bg-[var(--foreground)] selection:text-[var(--background)]">
+      <main className="flex min-h-screen w-full flex-col justify-between selection:bg-[var(--foreground)] selection:text-[var(--background)]">
         <Navigation />
         <Hero />
         <About />

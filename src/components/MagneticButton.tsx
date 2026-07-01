@@ -43,7 +43,7 @@ export default function MagneticButton({
     <motion.button ref={ref}
       onMouseMove={handleMouse} onMouseLeave={reset} onClick={onClick}
       style={{ x: smoothX, y: smoothY }}
-      className={`relative px-6 py-3 rounded-full bg-[var(--foreground)] text-[var(--background)] font-medium text-sm transition-colors hover:bg-[var(--accent)] ${className}`}>
+      className={`relative px-6 py-3 rounded-full border border-white/20 bg-white/10 backdrop-blur-md text-white font-medium text-sm transition-all duration-300 hover:bg-white/15 hover:border-white/40 ${className}`}>
       {children}
     </motion.button>
   );
