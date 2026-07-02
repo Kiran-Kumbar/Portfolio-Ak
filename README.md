@@ -1,72 +1,67 @@
 <div align="center">
-  <h1>🚀 Kiran Kumbar — Full-Stack Engineer Portfolio</h1>
-  <p>A cinematic, motion-first personal portfolio built with modern web technologies.</p>
+  <img src="public/favicon.png" alt="Logo" width="100" height="100" />
+  <h1>Kiran Kumbar — Full-Stack Engineer</h1>
+  <p>
+    <strong>A highly interactive, cinematic, and production-ready portfolio built with Next.js 14 and Framer Motion.</strong>
+  </p>
 
   <p>
-    <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
-    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
-    <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" />
-    <img src="https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white" alt="Three.js" />
+    <a href="https://portfolio-ak-phi.vercel.app/" target="_blank">
+      <img src="https://img.shields.io/badge/Live_Preview-View_Portfolio-C8B89A?style=for-the-badge&logo=vercel&logoColor=black" alt="Live Preview" />
+    </a>
   </p>
 </div>
 
----
+<br />
 
-## ✨ Overview
+## ✨ Features
 
-This is my personal portfolio website, designed to showcase my skills as a Full-Stack Engineer. It features a premium, modern aesthetic with smooth scrolling, advanced typography, and fluid micro-interactions. 
+- **🚀 Next.js 14 App Router:** Built for extreme performance and seamless server/client rendering.
+- **🎨 Cinematic Animations:** Orchestrated via `framer-motion`, featuring a custom cinematic preloader, smooth scrolling, and scroll-linked reveals.
+- **📖 3D Interactive Book Experience:** A hyper-realistic, scroll-driven 3D book to showcase the resume. Includes true 3D physics, paper curl effects, dynamic lighting, and realistic shadows.
+- **💅 Premium Aesthetic:** Curated "Champagne & Obsidian" color palette with subtle grain textures and glassmorphism UI elements.
+- **📱 Fully Responsive:** Carefully crafted to ensure the complex 3D animations and layouts remain perfectly proportional across mobile, tablet, and desktop viewports.
 
-The site highlights my production experience building SaaS platforms, e-commerce systems, and data-driven dashboards, alongside my passion for creating pixel-perfect, high-performance user interfaces.
+<br />
 
-## 🌟 Key Features
+## 🛠️ Tech Stack
 
-- **Cinematic UI/UX:** Built with a focus on editorial design, whitespace, and high-end aesthetics.
-- **Advanced Animations:** Utilizes `Framer Motion` and `GSAP` for scroll-triggered animations, page transitions, and magnetic buttons.
-- **Smooth Scrolling:** Integrated with `Lenis` for a buttery-smooth scrolling experience across all devices.
-- **Custom Cursor:** A custom-built animated pointer that elegantly tracks mouse movement and highlights interactive elements.
-- **Responsive Design:** Completely mobile-friendly with responsive typography and fluid layouts using Tailwind CSS.
-- **Direct Resume Access:** One-click PDF download for my latest professional resume.
+- **Framework:** [Next.js](https://nextjs.org/) (React)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Animation:** [Framer Motion](https://www.framer.com/motion/)
+- **Icons:** [React Icons](https://react-icons.github.io/react-icons/)
+- **Deployment:** [Vercel](https://vercel.com/)
 
-## 💻 Tech Stack
-
-- **Framework:** [Next.js 15 (App Router)](https://nextjs.org/)
-- **Language:** [TypeScript](https://www.typescriptlang.org/)
-- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
-- **Animation:** [Framer Motion](https://www.framer.com/motion/) & [GSAP](https://gsap.com/)
-- **Smooth Scroll:** [Lenis](https://lenis.studiofreight.com/)
-- **Icons:** [Lucide React](https://lucide.dev/)
+<br />
 
 ## 🚀 Getting Started
 
-To run this project locally:
+First, clone the repository and install the dependencies:
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Kiran-Kumbar/Portfolio-Ak.git
-   cd Portfolio-Ak
-   ```
+```bash
+git clone https://github.com/Kiran-Kumbar/Portfolio-Ak.git
+cd Portfolio-Ak
+npm install
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+Then, run the development server:
 
-3. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run dev
+```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## 📫 Contact
+<br />
 
-Feel free to reach out if you're looking for a developer, have a question, or just want to connect!
+## 📐 Architecture Highlights
 
-- **Email:** kirankumbar3703@gmail.com
-- **LinkedIn:** [linkedin.com/in/kiran-kumbar](https://linkedin.com/in/kiran-kumbar)
-- **GitHub:** [github.com/Kiran-Kumbar](https://github.com/Kiran-Kumbar)
+- **`Experience.tsx`**: Houses the custom 3D book animation engine. Utilizes `useTransform` and scroll progress to simulate true paper physics without requiring heavy WebGL libraries.
+- **`ClientShell.tsx` & `Loader.tsx`**: A custom application shell that intercepts the initial load to present a beautifully orchestrated, glowing cinematic preloader.
+- **`globals.css`**: Defines a strict, CSS variable-driven design token system to ensure colors (`--color-background`, `--color-accent`) remain perfectly consistent across all Tailwind classes.
+
+<br />
 
 <div align="center">
-  <i>Built with ❤️ by Kiran Kumbar</i>
+  <p>Designed and Developed by <b>Kiran Kumbar</b></p>
 </div>
