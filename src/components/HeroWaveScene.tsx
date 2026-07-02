@@ -153,7 +153,7 @@ export default function HeroBackground() {
       ctx!.clearRect(0, 0, w, h);
 
       /* 1. Base fill */
-      ctx!.fillStyle = "#07090F";
+      ctx!.fillStyle = "#0C0B09";
       ctx!.fillRect(0, 0, w, h);
 
       /* 2. Mesh gradient — two slow-moving orbs, 10-15% opacity */
@@ -162,19 +162,19 @@ export default function HeroBackground() {
       const orb2X = w * (0.78 + Math.cos(t * 0.8) * 0.06);
       const orb2Y = h * (0.55 + Math.sin(t * 1.1) * 0.07);
 
-      // Orb 1 — deep blue
+      // Orb 1 — Champagne glow
       const g1 = ctx!.createRadialGradient(orb1X, orb1Y, 0, orb1X, orb1Y, w * 0.45);
-      g1.addColorStop(0,   "rgba(30, 64, 175, 0.13)");  // blue-800 @ 13%
-      g1.addColorStop(0.5, "rgba(30, 64, 175, 0.05)");
-      g1.addColorStop(1,   "rgba(30, 64, 175, 0.00)");
+      g1.addColorStop(0,   "rgba(200, 184, 154, 0.13)");
+      g1.addColorStop(0.5, "rgba(200, 184, 154, 0.05)");
+      g1.addColorStop(1,   "rgba(200, 184, 154, 0.00)");
       ctx!.fillStyle = g1;
       ctx!.fillRect(0, 0, w, h);
 
-      // Orb 2 — deep indigo/violet
+      // Orb 2 — Champagne soft
       const g2 = ctx!.createRadialGradient(orb2X, orb2Y, 0, orb2X, orb2Y, w * 0.40);
-      g2.addColorStop(0,   "rgba(79, 70, 229, 0.11)");  // indigo-600 @ 11%
-      g2.addColorStop(0.5, "rgba(79, 70, 229, 0.04)");
-      g2.addColorStop(1,   "rgba(79, 70, 229, 0.00)");
+      g2.addColorStop(0,   "rgba(200, 184, 154, 0.11)");
+      g2.addColorStop(0.5, "rgba(200, 184, 154, 0.04)");
+      g2.addColorStop(1,   "rgba(200, 184, 154, 0.00)");
       ctx!.fillStyle = g2;
       ctx!.fillRect(0, 0, w, h);
 
@@ -183,7 +183,7 @@ export default function HeroBackground() {
         const alpha = s.baseAlpha * (0.5 + 0.5 * Math.sin(t * 600 * s.speed + s.phase));
         ctx!.beginPath();
         ctx!.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(200, 215, 255, ${alpha})`;
+        ctx!.fillStyle = `rgba(200, 184, 154, ${alpha})`;
         ctx!.fill();
       }
 
@@ -204,7 +204,7 @@ export default function HeroBackground() {
 
         ctx!.beginPath();
         ctx!.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(148, 163, 210, ${alpha})`; // muted periwinkle
+        ctx!.fillStyle = `rgba(200, 184, 154, ${alpha})`; // muted champagne
         ctx!.fill();
       }
 
@@ -213,9 +213,9 @@ export default function HeroBackground() {
       const my = mouseRef.current.y;
       if (mx > -100) {
         const mg = ctx!.createRadialGradient(mx, my, 0, mx, my, 180);
-        mg.addColorStop(0,   "rgba(99, 120, 220, 0.10)");
-        mg.addColorStop(0.5, "rgba(99, 120, 220, 0.04)");
-        mg.addColorStop(1,   "rgba(99, 120, 220, 0.00)");
+        mg.addColorStop(0,   "rgba(200, 184, 154, 0.10)");
+        mg.addColorStop(0.5, "rgba(200, 184, 154, 0.04)");
+        mg.addColorStop(1,   "rgba(200, 184, 154, 0.00)");
         ctx!.fillStyle = mg;
         ctx!.fillRect(0, 0, w, h);
       }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useInView, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
+import { motion, useInView, useScroll, useTransform, useSpring, MotionValue, animate } from "framer-motion";
 import { IconType } from "react-icons";
 import {
   SiNextdotjs, SiReact, SiTypescript, SiNestjs, SiNodedotjs,
@@ -11,29 +11,29 @@ import {
 import { TbApi, TbBrandSocketIo, TbRefresh } from "react-icons/tb";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
-
-/* ── Animated Counter ── */
 function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
 
+  useEffect(() => {
+    if (inView && ref.current) {
+      const controls = animate(0, value, {
+        duration: 2,
+        ease: "easeOut",
+        onUpdate: (latest) => {
+          if (ref.current) {
+            ref.current.textContent = Math.round(latest).toString() + suffix;
+          }
+        },
+      });
+      return () => controls.stop();
+    }
+  }, [inView, value, suffix]);
+
   return (
-    <motion.span
-      ref={ref}
-      className="tabular-nums"
-      initial={{ opacity: 0 }}
-      animate={inView ? { opacity: 1 } : {}}
-    >
-      {inView ? (
-        <motion.span
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {value}{suffix}
-        </motion.span>
-      ) : "0"}
-    </motion.span>
+    <span ref={ref} className="tabular-nums">
+      0{suffix}
+    </span>
   );
 }
 
@@ -304,11 +304,11 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative w-full bg-[#05070F] overflow-hidden"
+      className="relative w-full bg-background overflow-hidden"
     >
       {/* Subtle background glow */}
       <motion.div
-        className="absolute top-0 left-[20%] w-[600px] h-[600px] bg-blue-900/10 rounded-full filter blur-[150px] pointer-events-none"
+        className="absolute top-0 left-[20%] w-[600px] h-[600px] bg-accent/10 rounded-full filter blur-[150px] pointer-events-none"
         style={{ y: bgY }}
       />
 
@@ -317,24 +317,24 @@ export default function About() {
         {/* ── Section Header ── */}
         <div className="mb-24 md:mb-32">
           <RevealLine>
-            <span className="text-[11px] font-mono text-blue-400/70 uppercase tracking-[0.25em] mb-5 block">
+            <span className="text-[11px] font-mono text-accent/70 uppercase tracking-[0.25em] mb-5 block">
               01 — About
             </span>
           </RevealLine>
 
           <RevealLine delay={0.1}>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-8">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.1] mb-8">
               I build things<br />
-              <span className="text-blue-400">that scale.</span>
+              <span className="text-accent">that scale.</span>
             </h2>
           </RevealLine>
 
           <RevealLine delay={0.2}>
-            <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-[1.7] font-light">
+            <p className="text-lg md:text-xl text-muted max-w-2xl leading-[1.7] font-light">
               Full-Stack Engineer with production experience building SaaS platforms,
               e-commerce systems, and maritime applications. I combine sharp engineering
               fundamentals with cinematic UI craft to deliver experiences that feel{" "}
-              <span className="text-white font-medium">alive</span>.
+              <span className="text-foreground font-medium">alive</span>.
             </p>
           </RevealLine>
         </div>
@@ -345,38 +345,38 @@ export default function About() {
           {/* Left: Stats Column */}
           <div className="flex flex-col gap-12">
             <RevealLine>
-              <div className="border-l-2 border-blue-400/30 pl-6">
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">
+              <div className="border-l-2 border-accent/30 pl-6">
+                <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">
                   <Counter value={1} suffix="+" />
                 </div>
-                <p className="text-sm text-slate-500 uppercase tracking-wider font-mono">Years Production</p>
+                <p className="text-sm text-muted uppercase tracking-wider font-mono">Years Production</p>
               </div>
             </RevealLine>
 
             <RevealLine delay={0.1}>
-              <div className="border-l-2 border-blue-400/30 pl-6">
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">
+              <div className="border-l-2 border-accent/30 pl-6">
+                <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">
                   <Counter value={10} suffix="+" />
                 </div>
-                <p className="text-sm text-slate-500 uppercase tracking-wider font-mono">Projects Shipped</p>
+                <p className="text-sm text-muted uppercase tracking-wider font-mono">Projects Shipped</p>
               </div>
             </RevealLine>
 
             <RevealLine delay={0.2}>
-              <div className="border-l-2 border-blue-400/30 pl-6">
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">
+              <div className="border-l-2 border-accent/30 pl-6">
+                <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">
                   <Counter value={3} />
                 </div>
-                <p className="text-sm text-slate-500 uppercase tracking-wider font-mono">Industries Served</p>
+                <p className="text-sm text-muted uppercase tracking-wider font-mono">Industries Served</p>
               </div>
             </RevealLine>
 
             <RevealLine delay={0.3}>
-              <div className="border-l-2 border-blue-400/30 pl-6">
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">
+              <div className="border-l-2 border-accent/30 pl-6">
+                <div className="text-4xl md:text-5xl font-bold text-foreground mb-2">
                   E2E
                 </div>
-                <p className="text-sm text-slate-500 uppercase tracking-wider font-mono">Feature Ownership</p>
+                <p className="text-sm text-muted uppercase tracking-wider font-mono">Feature Ownership</p>
               </div>
             </RevealLine>
           </div>
@@ -384,7 +384,7 @@ export default function About() {
           {/* Right: Story Timeline */}
           <div ref={storyRef} className="relative">
             {/* The static background line */}
-            <div className="absolute left-[5px] top-4 bottom-8 w-[2px] bg-white/[0.05]" />
+            <div className="absolute left-[5px] top-4 bottom-8 w-[2px] bg-border-strong" />
             
             {/* The glowing progress line */}
             <motion.div 

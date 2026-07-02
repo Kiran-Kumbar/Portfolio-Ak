@@ -112,43 +112,43 @@ function CaseStudyModal({ project, onClose }: { project: ProjectData; onClose: (
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}>
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-[var(--foreground)]/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-foreground/60 backdrop-blur-sm" onClick={onClose} />
 
       {/* Modal */}
       <motion.div
-        className="relative w-[90vw] max-w-3xl max-h-[85vh] overflow-y-auto bg-[var(--background)] rounded-2xl p-8 md:p-12 z-10"
+        className="relative w-[90vw] max-w-3xl max-h-[85vh] overflow-y-auto bg-background rounded-2xl p-8 md:p-12 z-10"
         initial={{ y: 40, scale: 0.95, opacity: 0 }}
         animate={{ y: 0, scale: 1, opacity: 1 }}
         exit={{ y: 20, scale: 0.98, opacity: 0 }}
         transition={{ duration: 0.4, ease: EASE }}>
         <button onClick={onClose}
-          className="absolute top-4 right-4 w-10 h-10 rounded-full bg-[var(--surface)] flex items-center justify-center hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors">
+          className="absolute top-4 right-4 w-10 h-10 rounded-full bg-surface flex items-center justify-center hover:bg-foreground hover:text-background transition-colors">
           <X size={18} />
         </button>
 
         <div className="flex items-baseline gap-4 mb-2">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{project.title}</h2>
-          <span className="text-sm font-mono text-[var(--muted)]">{project.year}</span>
+          <span className="text-sm font-mono text-muted">{project.year}</span>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-8">
           {project.tags.map((tag) => (
-            <span key={tag} className="text-xs font-medium border border-[var(--surface)] px-3 py-1 rounded-full text-[var(--muted)]">{tag}</span>
+            <span key={tag} className="text-xs font-medium border border-surface px-3 py-1 rounded-full text-muted">{tag}</span>
           ))}
         </div>
 
         <div className="space-y-8">
           <div>
-            <h3 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] mb-3">Problem</h3>
-            <p className="text-[var(--muted)] leading-relaxed">{project.caseStudy.problem}</p>
+            <h3 className="text-xs font-mono uppercase tracking-widest text-accent mb-3">Problem</h3>
+            <p className="text-muted leading-relaxed">{project.caseStudy.problem}</p>
           </div>
           <div>
-            <h3 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] mb-3">My Role &amp; Approach</h3>
-            <p className="text-[var(--muted)] leading-relaxed">{project.caseStudy.role}</p>
+            <h3 className="text-xs font-mono uppercase tracking-widest text-accent mb-3">My Role &amp; Approach</h3>
+            <p className="text-muted leading-relaxed">{project.caseStudy.role}</p>
           </div>
           <div>
-            <h3 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] mb-3">Outcome</h3>
-            <p className="text-[var(--muted)] leading-relaxed">{project.caseStudy.outcome}</p>
+            <h3 className="text-xs font-mono uppercase tracking-widest text-accent mb-3">Outcome</h3>
+            <p className="text-muted leading-relaxed">{project.caseStudy.outcome}</p>
           </div>
         </div>
       </motion.div>
@@ -162,7 +162,7 @@ function AnimatedDivider() {
   const inView = useInView(ref, { once: true, margin: "-50px" });
   return (
     <div ref={ref} className="w-full overflow-hidden">
-      <motion.div className="h-px bg-[var(--surface)]"
+      <motion.div className="h-px bg-surface"
         initial={{ scaleX: 0 }} animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
         transition={{ duration: 0.8, ease: EASE }} style={{ transformOrigin: "left" }} />
     </div>
@@ -195,16 +195,16 @@ function ProjectCard({ project, index, onOpen }: { project: ProjectData; index: 
         <div className="w-full md:w-2/3">
           <div className="flex items-center gap-4 mb-4">
             <motion.h3 className="text-3xl md:text-4xl font-bold tracking-tight transition-colors duration-300"
-              animate={{ scale: hovering ? 1.02 : 1, color: hovering ? "var(--accent)" : "var(--foreground)" }}
+              animate={{ scale: hovering ? 1.02 : 1, color: hovering ? "var(--color-accent)" : "var(--color-foreground)" }}
               transition={{ duration: 0.25 }}>
               {project.title}
             </motion.h3>
-            <span className="text-sm font-mono text-[var(--muted)]">{project.year}</span>
+            <span className="text-sm font-mono text-muted">{project.year}</span>
           </div>
-          <p className="text-lg text-[var(--muted)] mb-6 leading-[1.6]">{project.description}</p>
+          <p className="text-lg text-muted mb-6 leading-[1.6]">{project.description}</p>
           <div className="flex flex-wrap gap-2">
             {project.tags.map((tag, ti) => (
-              <motion.span key={tag} className="text-xs font-medium border border-[var(--surface)] text-[var(--muted)] px-3 py-1 rounded-full"
+              <motion.span key={tag} className="text-xs font-medium border border-surface text-muted px-3 py-1 rounded-full"
                 animate={hovering ? { y: -2 } : { y: 0 }}
                 transition={{ delay: ti * 0.03, type: "spring", stiffness: 300, damping: 15 }}>
                 {tag}
@@ -215,7 +215,7 @@ function ProjectCard({ project, index, onOpen }: { project: ProjectData; index: 
         <motion.div className="hidden md:flex gap-4"
           animate={{ opacity: hovering ? 1 : 0, x: hovering ? 0 : -16 }}
           transition={{ duration: 0.3, ease: EASE }}>
-          <div className="w-12 h-12 rounded-full border border-[var(--surface)] flex items-center justify-center hover:bg-[var(--foreground)] hover:text-[var(--background)] transition-colors">
+          <div className="w-12 h-12 rounded-full border border-surface flex items-center justify-center hover:bg-foreground hover:text-background transition-colors">
             <ExternalLink size={18} />
           </div>
         </motion.div>
@@ -227,7 +227,7 @@ function ProjectCard({ project, index, onOpen }: { project: ProjectData; index: 
           initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.5, opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 25 }}>
-          <div className="bg-[var(--foreground)] text-[var(--background)] text-sm font-medium px-4 py-2 rounded-full -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
+          <div className="bg-foreground text-background text-sm font-medium px-4 py-2 rounded-full -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
             View Case Study →
           </div>
         </motion.div>
@@ -244,7 +244,7 @@ export default function Projects() {
   const [activeProject, setActiveProject] = useState<number | null>(null);
 
   return (
-    <section id="projects" className="px-6 md:px-12 lg:px-24 py-[100px]">
+    <section id="projects" className="px-6 md:px-12 lg:px-24 py-[100px] bg-background">
       <motion.h2 ref={headingRef} className="text-4xl md:text-5xl font-bold tracking-tight mb-16"
         initial={{ y: 30, opacity: 0 }}
         animate={headingInView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}

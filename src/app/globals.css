@@ -1,19 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --background: #05070F;
-  --surface: #0c1022;
-  --foreground: #F8FAFC;
-  --muted: #94A3B8;
-  --accent: #60A5FA;
+  --bg:              #0C0B09;
+  --surface:         #131210;
+  --card:            #1A1916;
+  --card-hover:      #22201E;
+  --foreground:      #F5F3EE;
+  --text-secondary:  #B8B4AC;
+  --muted:           #77746E;
+  --border:          rgba(245,243,238,0.10);
+  --border-strong:   rgba(245,243,238,0.18);
+  --accent:          #C8B89A;
+  --accent-hover:    #DED2BB;
+  --accent-soft:     rgba(200,184,154,0.10);
+  --success:         #8FA58A;
+  --danger:          #B66A62;
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-background: var(--bg);
   --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-card-hover: var(--card-hover);
   --color-foreground: var(--foreground);
+  --color-text-secondary: var(--text-secondary);
   --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 }
@@ -27,7 +45,7 @@ html.lenis, html.lenis body { height: auto; }
 
 /* ── Base styles ──────────────────────────────────────── */
 body {
-  background: var(--background);
+  background: var(--bg);
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -36,7 +54,7 @@ body {
 
 ::selection {
   background: var(--foreground);
-  color: var(--background);
+  color: var(--bg);
 }
 
 /* ── Hide default cursor on desktop ───────────────────── */

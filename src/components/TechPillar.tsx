@@ -23,7 +23,7 @@ export default function TechPillar() {
         <motion.div 
           animate={{ y: ["-100%", "500%"] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-          className="w-full h-1/3 bg-gradient-to-b from-transparent via-[var(--accent)] to-transparent opacity-100"
+          className="w-full h-1/3 bg-gradient-to-b from-transparent via-accent to-transparent opacity-100"
         />
       </div>
 
@@ -39,12 +39,12 @@ export default function TechPillar() {
               className="flex items-center gap-5 group cursor-default"
             >
               {/* Outer Ring */}
-              <div className="w-14 h-14 rounded-full border border-white/10 bg-gray-900 flex items-center justify-center relative shadow-sm group-hover:border-blue-400 group-hover:shadow-[0_0_12px_rgba(96,165,250,0.3)] group-hover:scale-105 transition-all duration-300">
+              <div className="w-14 h-14 rounded-full border border-border bg-surface flex items-center justify-center relative shadow-sm group-hover:border-accent group-hover:shadow-[0_0_12px_var(--color-accent-soft)] group-hover:scale-105 transition-all duration-300">
                 <Icon className={`w-6 h-6 ${item.color}`} />
               </div>
 
               {/* Text Label */}
-              <span className="text-sm font-semibold text-slate-200 group-hover:text-blue-400 transition-colors duration-300">
+              <span className="text-sm font-semibold text-foreground group-hover:text-accent transition-colors duration-300">
                 {item.label}
               </span>
             </motion.div>

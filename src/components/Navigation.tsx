@@ -35,11 +35,11 @@ export default function Navigation() {
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-      scrolled ? "py-4 bg-[#05070F]/70 backdrop-blur-md border-b border-white/10" : "py-8 bg-transparent"
+      scrolled ? "py-4 bg-background/80 backdrop-blur-md border-b border-border" : "py-8 bg-transparent"
     }`}>
       <div className="px-6 md:px-12 lg:px-24 flex items-center justify-between">
-        <div className="font-bold text-xl tracking-tighter text-white">
-          KK<span className="text-blue-400">.</span>
+        <div className="font-bold text-xl tracking-tighter text-foreground">
+          KK<span className="text-accent">.</span>
         </div>
 
         <div className="flex items-center gap-6">

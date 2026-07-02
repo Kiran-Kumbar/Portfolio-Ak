@@ -73,11 +73,11 @@ export default function GlassTerminal() {
   // Minimalist Hacker Highlighting for Light Background
   const highlightCode = (code: string) => {
     return code
-      .replace(/\/\/ \[sys\] initializing neural-mesh architecture v9\.4\.2\.\.\./g, (match) => `<span class="text-slate-500/50 italic">${match}</span>`)
-      .replace(/import|from|const|new|async|await|return|if/g, (match) => `<span class="text-slate-300 font-bold">${match}</span>`)
-      .replace(/CoreKernel|V8Engine|WebGLShaders|VectorMath|StateMachine/g, (match) => `<span class="text-slate-300 font-bold">${match}</span>`)
-      .replace(/true|144/g, (match) => `<span class="text-pink-600 font-bold">${match}</span>`) // numbers/booleans
-      .replace(/'[^']*'/g, (match) => `<span class="text-emerald-600 font-semibold">${match}</span>`); // Hacker green strings
+      .replace(/\/\/ \[sys\] initializing neural-mesh architecture v9\.4\.2\.\.\./g, (match) => `<span class="text-muted/70 italic">${match}</span>`)
+      .replace(/import|from|const|new|async|await|return|if/g, (match) => `<span class="text-accent font-bold">${match}</span>`)
+      .replace(/CoreKernel|V8Engine|WebGLShaders|VectorMath|StateMachine/g, (match) => `<span class="text-foreground font-bold">${match}</span>`)
+      .replace(/true|144/g, (match) => `<span class="text-danger font-bold">${match}</span>`) // numbers/booleans
+      .replace(/'[^']*'/g, (match) => `<span class="text-success font-semibold">${match}</span>`); // strings
   };
 
   return (
@@ -92,7 +92,7 @@ export default function GlassTerminal() {
       <motion.div 
         whileHover={{ rotateY: -1, rotateX: 1, x: 5 }}
         transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        className="relative bg-[#0a0e1a]/70 backdrop-blur-xl border-l border-blue-400/15 pl-6 md:pl-8 rounded-r-lg"
+        className="relative bg-surface/70 backdrop-blur-xl border-l border-accent/15 pl-6 md:pl-8 rounded-r-lg"
       >
         {/* Pure Code Content with Auto-Scroll */}
         <div 
