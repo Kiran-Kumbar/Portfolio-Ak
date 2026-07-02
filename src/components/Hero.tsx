@@ -52,7 +52,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.035] mix-blend-overlay pointer-events-none z-10" />
       </div>
 
-      <div className="w-full max-w-[1400px] z-20 relative grid grid-cols-1 lg:grid-cols-[1.2fr_auto_1fr] gap-8 lg:gap-10 items-center mr-auto">
+      <div className="w-full max-w-[1600px] z-20 relative grid grid-cols-1 lg:grid-cols-[1.2fr_auto_1.4fr] gap-8 lg:gap-10 items-center mx-auto">
         {/* Left Column: Typography */}
         <div>
           <h1 className="flex flex-col text-[clamp(3rem,4.5vw,6rem)] leading-[1.05] font-bold tracking-tighter mb-10 text-white">

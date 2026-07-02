@@ -43,7 +43,13 @@ export default function Navigation() {
         </div>
 
         <div className="flex items-center gap-6">
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+            <div className="flex items-center gap-6 pr-6 border-r border-slate-700">
+              <a href="#about" className="hover:text-blue-400 transition-colors">About</a>
+              <a href="#experience" className="hover:text-blue-400 transition-colors">Experience</a>
+              <a href="#projects" className="hover:text-blue-400 transition-colors">Projects</a>
+            </div>
+            
             <a href="https://github.com/Kiran-Kumbar" target="_blank" rel="noreferrer"
               className="hover:text-blue-400 transition-colors flex items-center gap-2">
               <GithubIcon size={16} /> GitHub

@@ -244,7 +244,7 @@ export default function Projects() {
   const [activeProject, setActiveProject] = useState<number | null>(null);
 
   return (
-    <section className="px-6 md:px-12 lg:px-24 py-[100px]">
+    <section id="projects" className="px-6 md:px-12 lg:px-24 py-[100px]">
       <motion.h2 ref={headingRef} className="text-4xl md:text-5xl font-bold tracking-tight mb-16"
         initial={{ y: 30, opacity: 0 }}
         animate={headingInView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}

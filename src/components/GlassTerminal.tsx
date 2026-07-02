@@ -86,7 +86,7 @@ export default function GlassTerminal() {
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
       style={{ perspective: 1000 }}
-      className="w-full max-w-xl lg:max-w-2xl ml-auto"
+      className="w-full max-w-xl lg:max-w-none ml-auto"
     >
       {/* Floating Container Grounded by an invisible Editor Margin */}
       <motion.div 
