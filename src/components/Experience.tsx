@@ -127,7 +127,6 @@ const entries = [
       "Full-stack logistics SaaS for freight ops, tracking, and digital docs.",
       "AI-powered invoicing, route optimisation, and workflow automation.",
       "Targeting small Indian transport companies.",
-      "Also exploring algorithmic GBP/JPY trading with Smart Money Concepts.",
     ],
     stack: ["Next.js", "NestJS", "MongoDB", "Framer Motion"],
     focus: ["Product Strategy", "SaaS Architecture", "Logistics Domain"],

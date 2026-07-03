@@ -20,6 +20,39 @@ interface ProjectData {
 
 const projects: ProjectData[] = [
   {
+    title: "NexusFin Core",
+    description: "Production-ready, full-stack Core Banking platform featuring a scalable double-entry accounting engine and complex loan lifecycle management.",
+    tags: ["Next.js", "Node.js", "TypeScript", "MongoDB", "Tailwind CSS"],
+    year: "2026",
+    caseStudy: {
+      problem: "Legacy financial systems suffer from N+1 ledger scaling problems and struggle to calculate live account balances for massive datasets without memory overload.",
+      role: "Architected a unified 'Control Ledger' system to centralize thousands of accounts. Engineered a High-Performance Aggregation Engine using complex MongoDB pipelines and compound B-Tree indexes for sub-millisecond live balance calculations. Built a robust, type-safe Loan & EMI engine and developed fault-tolerant bulk data migration pipelines.",
+      outcome: "Delivered a highly optimized, 100% stable enterprise-grade production environment capable of processing millions of transactions, managing complete loan lifecycles, and ensuring strict financial compliance.",
+    },
+  },
+  {
+    title: "Genesys Voyage",
+    description: "High-performance medical tourism platform connecting international patients with JCI-accredited hospitals in India via a highly interactive UI.",
+    tags: ["Next.js 16", "React 19", "TypeScript", "Framer Motion", "MongoDB"],
+    year: "2026",
+    caseStudy: {
+      problem: "Required an SEO-optimized, highly interactive medical portal to handle dynamic content (treatments, hospitals) and maximize international lead conversion.",
+      role: "Architected the frontend using Next.js App Router and Framer Motion. Engineered advanced UI/UX features including custom magnetic cursors, cinematic splash screens, and a VSL funnel with seamless WhatsApp integration.",
+      outcome: "Delivered a premium healthcare platform with optimized Core Web Vitals, strong organic traffic through SSR and dynamic metadata, and significantly higher consultation conversion rates.",
+    },
+  },
+  {
+    title: "Bar Management SaaS",
+    description: "Comprehensive, multi-tenant B2B SaaS platform for hospitality management, covering POS, real-time inventory tracking, and complex multi-branch table management.",
+    tags: ["Next.js 16", "NestJS", "PostgreSQL", "React Query", "Zustand"],
+    year: "2026",
+    caseStudy: {
+      problem: "Bar and restaurant chains needed a unified, multi-tenant platform to seamlessly integrate POS operations, complex supply chains, and multi-branch management without performance degradation under heavy load.",
+      role: "Architected a modular NestJS backend utilizing PostgreSQL and Zod for robust data validation across complex relational domains. Built a high-performance Next.js frontend using React Query for server-state caching and Zustand for complex local POS state.",
+      outcome: "Deployed a highly scalable, multi-tenant enterprise system with sub-second POS operation response times and robust business intelligence dashboards.",
+    },
+  },
+  {
     title: "eDealIndia",
     description: "Architected a production-grade, multi-tenant e-commerce and gamification platform featuring live draw ceremonies, animated slot machines, real-time leaderboards, and a jewellery marketplace.",
     tags: ["Next.js 16", "NestJS 11", "TypeScript", "MongoDB", "Redis"],

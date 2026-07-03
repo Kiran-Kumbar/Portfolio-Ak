@@ -38,7 +38,7 @@ export default function Hero() {
 
   return (
     <section ref={containerRef}
-      className="relative w-full h-screen flex flex-col justify-center items-start px-6 md:px-12 lg:px-24 pt-24 pb-12 overflow-hidden">
+      className="relative w-full min-h-[100dvh] md:h-screen h-auto flex flex-col justify-center items-start px-6 md:px-12 lg:px-24 pt-32 pb-24 md:pt-24 md:pb-12 overflow-hidden overflow-y-auto">
 
 
 
@@ -116,7 +116,7 @@ export default function Hero() {
         <TechPillar />
 
         {/* Right Column: Glass Terminal */}
-        <div className="hidden md:block">
+        <div className="w-full mt-10 lg:mt-0">
           <GlassTerminal />
         </div>
       </div>

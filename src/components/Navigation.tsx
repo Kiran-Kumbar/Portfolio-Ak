@@ -26,23 +26,41 @@ const DownloadIcon = ({ size = 14 }: { size?: number }) => (
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Handle background styling
+      setScrolled(currentScrollY > 50);
+
+      // Handle visibility (hide on scroll down, show on scroll up)
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false); // Scrolling down
+      } else {
+        setIsVisible(true);  // Scrolling up
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
       scrolled ? "py-4 bg-background/80 backdrop-blur-md border-b border-border" : "py-8 bg-transparent"
-    }`}>
+    } ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
       <div className="px-6 md:px-12 lg:px-24 flex items-center justify-between">
-        <div className="font-bold text-xl tracking-tighter text-foreground">
+        <div className="font-bold text-xl tracking-tighter text-foreground z-[60]">
           KK<span className="text-accent">.</span>
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4 md:gap-6">
+          {/* Desktop Nav: Full Text & Icons */}
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
             <div className="flex items-center gap-6 pr-6 border-r border-slate-700">
               <a href="#about" className="hover:text-blue-400 transition-colors">About</a>
@@ -60,9 +78,27 @@ export default function Navigation() {
             </a>
             <a href="/Kiran_Kumbar_Resume.pdf" download="Kiran_Kumbar_Resume.pdf" target="_blank" rel="noreferrer"
               className="hover:text-blue-400 transition-colors flex items-center gap-2">
-              <DownloadIcon /> Resume
+              <DownloadIcon size={16} /> Resume
             </a>
           </div>
+
+          {/* Mobile Nav: Icons Only */}
+          <div className="flex md:hidden items-center gap-4 text-slate-300">
+            <a href="https://github.com/Kiran-Kumbar" target="_blank" rel="noreferrer"
+              className="hover:text-blue-400 transition-colors">
+              <GithubIcon size={18} />
+            </a>
+            <a href="https://linkedin.com/in/kiran-kumbar" target="_blank" rel="noreferrer"
+              className="hover:text-blue-400 transition-colors">
+              <LinkedinIcon size={18} />
+            </a>
+            <a href="/Kiran_Kumbar_Resume.pdf" download="Kiran_Kumbar_Resume.pdf" target="_blank" rel="noreferrer"
+              className="hover:text-blue-400 transition-colors">
+              <DownloadIcon size={18} />
+            </a>
+          </div>
+
+          {/* Contact Button */}
           <MagneticButton onClick={() => window.location.href = "mailto:kirankumbar3703@gmail.com"}>
             Contact
           </MagneticButton>

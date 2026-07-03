@@ -27,8 +27,7 @@ export default function NowBlock() {
         <p className="text-lg font-medium leading-relaxed">
           Currently building{" "}
           <span className="text-[var(--accent)] font-bold">FreightIQ</span>, a
-          full-stack logistics platform — and trading GBP/JPY using Smart Money
-          Concepts.
+          full-stack logistics platform.
         </p>
       </motion.div>
     </section>
