@@ -49,7 +49,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="bg-[var(--background)] text-[var(--foreground)] min-h-screen">
+      <body className="bg-(--background) text-foreground min-h-screen">
         <SmoothScroll>
           <CustomCursor />
           {children}

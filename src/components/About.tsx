@@ -9,6 +9,7 @@ import {
   SiThreedotjs, SiRedis, SiGit, SiPython, SiDocker, SiVercel,
 } from "react-icons/si";
 import { TbApi, TbBrandSocketIo, TbRefresh } from "react-icons/tb";
+import Showreel from "./Showreel";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
@@ -118,7 +119,7 @@ function ChapterCard({
       {/* Timeline dot */}
       <div className="absolute left-0 top-1.5 flex flex-col items-center">
         <motion.div
-          className="w-3 h-3 rounded-full border-2 border-[var(--accent)] bg-[var(--background)] z-20 group-hover:bg-[var(--accent)] group-hover:shadow-[0_0_12px_var(--accent)] transition-all duration-500"
+          className="w-3 h-3 rounded-full border-2 border-accent bg-(--background) z-20 group-hover:bg-accent group-hover:shadow-[0_0_12px_var(--accent)] transition-all duration-500"
           initial={{ scale: 0 }}
           animate={inView ? { scale: 1 } : {}}
           transition={{ duration: 0.4, delay: delay + 0.2, ease: EASE }}
@@ -126,20 +127,20 @@ function ChapterCard({
       </div>
 
       {/* Chapter number */}
-      <span className="text-[11px] font-mono text-[var(--accent)] opacity-60 uppercase tracking-[0.2em] mb-3 block">
+      <span className="text-[11px] font-mono text-accent opacity-60 uppercase tracking-[0.2em] mb-3 block">
         {number}
       </span>
 
       {/* Title */}
-      <h3 className="text-xl md:text-2xl font-semibold text-[var(--foreground)] mb-4 group-hover:text-[var(--accent)] transition-colors duration-300">
+      <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-4 group-hover:text-accent transition-colors duration-300">
         {title}
       </h3>
 
       {/* Description */}
-      <p className="text-[15px] md:text-base text-[var(--muted)] leading-[1.75] max-w-lg">
+      <p className="text-[15px] md:text-base text-muted leading-[1.75] max-w-lg">
         {description}
         {highlight && (
-          <span className="text-[var(--accent)] font-medium"> {highlight}</span>
+          <span className="text-accent font-medium"> {highlight}</span>
         )}
       </p>
     </motion.div>
@@ -214,28 +215,28 @@ function ExpandCard({
 
   return (
     <motion.div
-      className="group relative flex flex-col justify-center p-5 rounded-2xl border border-white/[0.05] bg-[var(--surface)]/40 hover:bg-[var(--surface)] hover:border-[var(--accent)]/20 backdrop-blur-md transition-all duration-300 w-[300px] h-[120px] shrink-0 overflow-hidden"
+      className="group relative flex flex-col justify-center p-5 rounded-2xl border border-white/5 bg-(--surface)/40 hover:bg-surface hover:border-accent/20 backdrop-blur-md transition-all duration-300 w-[300px] h-[120px] shrink-0 overflow-hidden"
       style={{ x, y, scale: scl, opacity: op, rotate: rot }}
     >
       <div className="flex items-start gap-4">
-        <div className="mt-1 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.05] group-hover:bg-white/[0.05] transition-colors duration-300 shrink-0">
+        <div className="mt-1 p-2.5 rounded-xl bg-white/2 border border-white/5 group-hover:bg-white/5 transition-colors duration-300 shrink-0">
           <Icon
             className="w-6 h-6 transition-all duration-300 group-hover:scale-110"
             style={{ color: skill.color }}
           />
         </div>
         <div>
-          <h4 className="text-[15px] font-semibold text-[var(--foreground)] mb-1.5 group-hover:text-[var(--accent)] transition-colors duration-300">
+          <h4 className="text-[15px] font-semibold text-foreground mb-1.5 group-hover:text-accent transition-colors duration-300">
             {skill.name}
           </h4>
-          <p className="text-[12px] leading-[1.6] text-[var(--muted)] group-hover:text-[var(--foreground)] transition-colors duration-300">
+          <p className="text-[12px] leading-[1.6] text-muted group-hover:text-foreground transition-colors duration-300">
             {skill.desc}
           </p>
         </div>
       </div>
       
       {/* Subtle hover glow layer */}
-      <div className="absolute inset-0 bg-[var(--accent)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-(--accent)/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
     </motion.div>
   );
 }
@@ -315,27 +316,33 @@ export default function About() {
       <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-24 py-32 md:py-44">
 
         {/* ── Section Header ── */}
-        <div className="mb-24 md:mb-32">
-          <RevealLine>
-            <span className="text-[11px] font-mono text-accent/70 uppercase tracking-[0.25em] mb-5 block">
-              01 — About
-            </span>
-          </RevealLine>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center mb-24 md:mb-32">
+          <div>
+            <RevealLine>
+              <span className="text-[11px] font-mono text-accent/70 uppercase tracking-[0.25em] mb-5 block">
+                01 — About
+              </span>
+            </RevealLine>
 
-          <RevealLine delay={0.1}>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.1] mb-8">
-              I build things<br />
-              <span className="text-accent">that scale.</span>
-            </h2>
-          </RevealLine>
+            <RevealLine delay={0.1}>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-[1.1] mb-8">
+                I build things<br />
+                <span className="text-accent">that scale.</span>
+              </h2>
+            </RevealLine>
 
-          <RevealLine delay={0.2}>
-            <p className="text-lg md:text-xl text-muted max-w-2xl leading-[1.7] font-light">
-              Full-Stack Engineer with production experience building SaaS platforms,
-              e-commerce systems, and maritime applications. I combine sharp engineering
-              fundamentals with cinematic UI craft to deliver experiences that feel{" "}
-              <span className="text-foreground font-medium">alive</span>.
-            </p>
+            <RevealLine delay={0.2}>
+              <p className="text-lg md:text-xl text-muted max-w-2xl leading-[1.7] font-light">
+                Full-Stack Engineer with production experience building SaaS platforms,
+                e-commerce systems, and maritime applications. I combine sharp engineering
+                fundamentals with cinematic UI craft to deliver experiences that feel{" "}
+                <span className="text-foreground font-medium">alive</span>.
+              </p>
+            </RevealLine>
+          </div>
+          
+          <RevealLine delay={0.3} className="w-full">
+            <Showreel className="w-full max-w-full" />
           </RevealLine>
         </div>
 
@@ -388,7 +395,7 @@ export default function About() {
             
             {/* The glowing progress line */}
             <motion.div 
-              className="absolute left-[5px] top-4 bottom-8 w-[2px] bg-[var(--accent)] origin-top shadow-[0_0_15px_var(--accent)] opacity-80 z-10"
+              className="absolute left-[5px] top-4 bottom-8 w-[2px] bg-accent origin-top shadow-[0_0_15px_var(--accent)] opacity-80 z-10"
               style={{ scaleY: storyProgress }}
             />
 
@@ -403,7 +410,7 @@ export default function About() {
       <div ref={arsenalRef} className="w-full pb-32 overflow-hidden">
         <div className="max-w-[1200px] mx-auto px-6 md:px-12 lg:px-24 mb-10">
           <RevealLine>
-            <span className="text-[20px] md:text-[26px] font-mono font-bold text-[var(--accent)] uppercase tracking-[0.3em] block">
+            <span className="text-[20px] md:text-[26px] font-mono font-bold text-accent uppercase tracking-[0.3em] block">
               <ScrollMatrixText text="THE ARSENAL" progress={arsenalProgress} />
             </span>
           </RevealLine>
@@ -411,7 +418,7 @@ export default function About() {
 
         {/* The scrolling track */}
         <div 
-          className="w-full overflow-x-auto pb-8 px-6 md:px-12 lg:px-24 cursor-grab active:cursor-grabbing snap-x snap-mandatory scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="w-full overflow-x-auto pb-8 px-6 md:px-12 lg:px-24 cursor-grab active:cursor-grabbing snap-x snap-mandatory scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none"
         >
           <div className="grid grid-rows-3 grid-flow-col gap-4 w-max min-w-full pb-4">
             {SKILLS.map((skill, i) => (

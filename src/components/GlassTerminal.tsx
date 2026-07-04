@@ -100,7 +100,7 @@ export default function GlassTerminal() {
           className="py-6 pr-2 overflow-hidden h-[350px] md:h-[550px]"
           style={{ maskImage: "linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)" }}
         >
-          <pre className="font-mono text-[16px] md:text-[18px] leading-[1.8] text-slate-300 whitespace-pre-wrap break-words">
+          <pre className="font-mono text-[16px] md:text-[18px] leading-[1.8] text-slate-300 whitespace-pre-wrap wrap-break-word">
             <code dangerouslySetInnerHTML={{ __html: highlightCode(displayedText) }} />
             <motion.span 
               animate={{ opacity: [1, 0] }}

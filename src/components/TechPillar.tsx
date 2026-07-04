@@ -23,7 +23,7 @@ export default function TechPillar() {
         <motion.div 
           animate={{ y: ["-100%", "500%"] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-          className="w-full h-1/3 bg-gradient-to-b from-transparent via-accent to-transparent opacity-100"
+          className="w-full h-1/3 bg-linear-to-b from-transparent via-accent to-transparent opacity-100"
         />
       </div>
 

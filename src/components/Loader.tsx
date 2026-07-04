@@ -19,7 +19,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-[var(--background)]"
+          className="fixed inset-0 z-9999 flex items-center justify-center bg-(--background)"
           exit={{ 
             opacity: 0,
             scale: 0.95,

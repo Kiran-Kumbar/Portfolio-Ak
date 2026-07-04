@@ -55,7 +55,7 @@ export default function Navigation() {
       scrolled ? "py-4 bg-background/80 backdrop-blur-md border-b border-border" : "py-8 bg-transparent"
     } ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
       <div className="px-6 md:px-12 lg:px-24 flex items-center justify-between">
-        <div className="font-bold text-xl tracking-tighter text-foreground z-[60]">
+        <div className="font-bold text-xl tracking-tighter text-foreground z-60">
           KK<span className="text-accent">.</span>
         </div>
 
@@ -76,7 +76,7 @@ export default function Navigation() {
               className="hover:text-blue-400 transition-colors flex items-center gap-2">
               <LinkedinIcon size={16} /> LinkedIn
             </a>
-            <a href="/Kiran_Kumbar_Resume.pdf" download="Kiran_Kumbar_Resume.pdf" target="_blank" rel="noreferrer"
+            <a href="/Kiran_Kumbar_Resume1.pdf" target="_blank" rel="noreferrer"
               className="hover:text-blue-400 transition-colors flex items-center gap-2">
               <DownloadIcon size={16} /> Resume
             </a>
@@ -92,7 +92,7 @@ export default function Navigation() {
               className="hover:text-blue-400 transition-colors">
               <LinkedinIcon size={18} />
             </a>
-            <a href="/Kiran_Kumbar_Resume.pdf" download="Kiran_Kumbar_Resume.pdf" target="_blank" rel="noreferrer"
+            <a href="/Kiran_Kumbar_Resume1.pdf" target="_blank" rel="noreferrer"
               className="hover:text-blue-400 transition-colors">
               <DownloadIcon size={18} />
             </a>

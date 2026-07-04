@@ -141,7 +141,7 @@ function CaseStudyModal({ project, onClose }: { project: ProjectData; onClose: (
   }, [onClose]);
 
   return (
-    <motion.div className="fixed inset-0 z-[200] flex items-center justify-center"
+    <motion.div className="fixed inset-0 z-200 flex items-center justify-center"
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}>
       {/* Backdrop */}
@@ -255,7 +255,7 @@ function ProjectCard({ project, index, onOpen }: { project: ProjectData; index: 
       </motion.div>
 
       {hovering && (
-        <motion.div className="fixed top-0 left-0 pointer-events-none z-[100]"
+        <motion.div className="fixed top-0 left-0 pointer-events-none z-100"
           style={{ x: labelX, y: labelY }}
           initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.5, opacity: 0 }}

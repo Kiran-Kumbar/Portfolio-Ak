@@ -14,7 +14,7 @@ export default function ScrollIndicator() {
         Scroll
       </span>
       <motion.div
-        className="w-px h-8 bg-[var(--foreground)] origin-top"
+        className="w-px h-8 bg-foreground origin-top"
         animate={{ scaleY: [0, 1, 0] }}
         transition={{
           duration: 2,

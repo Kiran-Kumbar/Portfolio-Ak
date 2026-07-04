@@ -147,7 +147,7 @@ function PageContent({ entry, side }: { entry: typeof entries[0]; side: "left" |
   if (side === "left") {
     return (
       <div className="w-full h-full flex flex-col p-8 xl:p-10 overflow-hidden select-none">
-        <div className="mb-8 flex-shrink-0">
+        <div className="mb-8 shrink-0">
           <h3 className="text-[20px] font-bold text-foreground tracking-tight mb-2">Technical Details</h3>
           <p className="text-[13px] font-mono text-accent">{entry.company}</p>
         </div>
@@ -192,7 +192,7 @@ function PageContent({ entry, side }: { entry: typeof entries[0]; side: "left" |
   return (
     <div className="w-full h-full flex flex-col p-8 xl:p-10 overflow-hidden select-none">
       {/* Header */}
-      <div className="mb-8 flex-shrink-0">
+      <div className="mb-8 shrink-0">
         <div className="flex items-center gap-3 mb-4">
           <span className="text-[13px] font-mono text-accent">{entry.num}</span>
           <div className="h-px w-8 bg-accent-soft" />
@@ -224,7 +224,7 @@ function PageContent({ entry, side }: { entry: typeof entries[0]; side: "left" |
         <div className="space-y-4 text-[13.5px] xl:text-[15px] leading-relaxed text-text-secondary">
           {entry.bullets.map((b, i) => (
             <p key={i} className="flex gap-3">
-              <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-4 h-4 text-accent shrink-0 mt-0.5" />
               <span>{b}</span>
             </p>
           ))}
@@ -565,7 +565,7 @@ export default function Experience() {
           <div className="w-full max-w-[1300px] mx-auto px-4 lg:px-8 xl:px-12 flex flex-col lg:flex-row items-center gap-6 lg:gap-10 xl:gap-16">
 
             {/* ── LEFT NAV ── */}
-            <div className="w-full lg:w-[240px] xl:w-[270px] flex-shrink-0 space-y-1 text-center lg:text-left flex flex-col items-center lg:items-start">
+            <div className="w-full lg:w-[240px] xl:w-[270px] shrink-0 space-y-1 text-center lg:text-left flex flex-col items-center lg:items-start">
               <p className="text-[10px] font-mono text-accent tracking-[0.2em] uppercase mb-3 lg:mb-5 flex items-center justify-center lg:justify-start gap-2">
                 <span className="w-2 h-2 rounded-full bg-accent animate-pulse" /> Experience
               </p>
@@ -576,14 +576,14 @@ export default function Experience() {
 
               <nav className="hidden lg:block space-y-4 relative">
                 {/* Vertical connecting line */}
-                <div className="absolute left-[15px] top-4 bottom-4 w-px bg-gradient-to-b from-accent/30 via-accent/10 to-transparent -z-10" />
+                <div className="absolute left-[15px] top-4 bottom-4 w-px bg-linear-to-b from-accent/30 via-accent/10 to-transparent -z-10" />
                 {NAV.map((n, i) => (
                   <motion.div
                     key={i}
                     className="flex items-start gap-4 px-3 py-1.5 cursor-default"
                   >
                     <motion.div
-                      className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0"
+                      className="w-2 h-2 rounded-full mt-1.5 shrink-0"
                       animate={{
                         backgroundColor: i === active ? "var(--color-accent)" : "var(--color-accent-soft)",
                         scale: i === active ? 1.3 : 1,

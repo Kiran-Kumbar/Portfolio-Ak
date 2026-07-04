@@ -56,14 +56,15 @@ export default function Contact() {
           Currently open for new opportunities. Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
         </p>
         <MagneticButton
-          className="bg-transparent text-[#FAF9F6] border border-[var(--accent)] hover:bg-[var(--accent)] hover:text-white px-8 py-4 text-lg"
+          onClick={() => window.location.href = "mailto:kirankumbar3703@gmail.com"}
+          className="bg-transparent text-[#FAF9F6] border border-accent hover:bg-accent hover:text-white px-8 py-4 text-lg"
         >
           Say Hello
         </MagneticButton>
       </section>
 
       <motion.footer ref={footerRef}
-        className="w-full py-8 text-center text-sm text-[var(--muted)] flex flex-col md:flex-row justify-between px-6 md:px-12 lg:px-24"
+        className="w-full py-8 text-center text-sm text-muted flex flex-col md:flex-row justify-between px-6 md:px-12 lg:px-24"
         initial={{ opacity: 0 }} animate={footerInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 0.6, ease: EASE }}>
         <span>© {new Date().getFullYear()} Kiran Kumbar.</span>
