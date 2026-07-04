@@ -101,7 +101,7 @@ export default function Hero() {
         </motion.div>
 
         {/* Resume download — ghost button */}
-        <motion.a href="/Kiran_Kumbar_Resume1.pdf" target="_blank" rel="noreferrer"
+        <motion.a href="/resume"
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border-strong bg-transparent text-sm font-medium text-text-secondary hover:border-accent hover:text-accent hover:bg-accent-soft transition-all duration-300"
           initial={{ y: 15, opacity: 0 }} animate={{ y: 0, opacity: 1 }}
           transition={{ delay: subtextStart + 0.2, duration: 0.6, ease: EASE }}>

@@ -76,7 +76,7 @@ export default function Navigation() {
               className="hover:text-blue-400 transition-colors flex items-center gap-2">
               <LinkedinIcon size={16} /> LinkedIn
             </a>
-            <a href="/Kiran_Kumbar_Resume1.pdf" target="_blank" rel="noreferrer"
+            <a href="/resume"
               className="hover:text-blue-400 transition-colors flex items-center gap-2">
               <DownloadIcon size={16} /> Resume
             </a>
@@ -92,7 +92,7 @@ export default function Navigation() {
               className="hover:text-blue-400 transition-colors">
               <LinkedinIcon size={18} />
             </a>
-            <a href="/Kiran_Kumbar_Resume1.pdf" target="_blank" rel="noreferrer"
+            <a href="/resume"
               className="hover:text-blue-400 transition-colors">
               <DownloadIcon size={18} />
             </a>
