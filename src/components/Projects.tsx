@@ -1,300 +1,411 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useSpring, AnimatePresence } from "framer-motion";
-import { ExternalLink, X } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  PROJECTS, createParticles, lerp, easeInOutCubic,
+  drawMacBook, drawIPhone, drawParticles, drawVignette,
+  drawAccentGlow, drawGrain, drawCursor, drawProgressDots,
+  type Particle,
+} from "@/lib/projectsCanvas";
 
-const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
-
-interface ProjectData {
-  title: string;
-  description: string;
-  tags: string[];
-  year: string;
-  caseStudy: {
-    problem: string;
-    role: string;
-    outcome: string;
-  };
-}
-
-const projects: ProjectData[] = [
-  {
-    title: "NexusFin Core",
-    description: "Production-ready, full-stack Core Banking platform featuring a scalable double-entry accounting engine and complex loan lifecycle management.",
-    tags: ["Next.js", "Node.js", "TypeScript", "MongoDB", "Tailwind CSS"],
-    year: "2026",
-    caseStudy: {
-      problem: "Legacy financial systems suffer from N+1 ledger scaling problems and struggle to calculate live account balances for massive datasets without memory overload.",
-      role: "Architected a unified 'Control Ledger' system to centralize thousands of accounts. Engineered a High-Performance Aggregation Engine using complex MongoDB pipelines and compound B-Tree indexes for sub-millisecond live balance calculations. Built a robust, type-safe Loan & EMI engine and developed fault-tolerant bulk data migration pipelines.",
-      outcome: "Delivered a highly optimized, 100% stable enterprise-grade production environment capable of processing millions of transactions, managing complete loan lifecycles, and ensuring strict financial compliance.",
-    },
-  },
-  {
-    title: "Genesys Voyage",
-    description: "High-performance medical tourism platform connecting international patients with JCI-accredited hospitals in India via a highly interactive UI.",
-    tags: ["Next.js 16", "React 19", "TypeScript", "Framer Motion", "MongoDB"],
-    year: "2026",
-    caseStudy: {
-      problem: "Required an SEO-optimized, highly interactive medical portal to handle dynamic content (treatments, hospitals) and maximize international lead conversion.",
-      role: "Architected the frontend using Next.js App Router and Framer Motion. Engineered advanced UI/UX features including custom magnetic cursors, cinematic splash screens, and a VSL funnel with seamless WhatsApp integration.",
-      outcome: "Delivered a premium healthcare platform with optimized Core Web Vitals, strong organic traffic through SSR and dynamic metadata, and significantly higher consultation conversion rates.",
-    },
-  },
-  {
-    title: "Bar Management SaaS",
-    description: "Comprehensive, multi-tenant B2B SaaS platform for hospitality management, covering POS, real-time inventory tracking, and complex multi-branch table management.",
-    tags: ["Next.js 16", "NestJS", "PostgreSQL", "React Query", "Zustand"],
-    year: "2026",
-    caseStudy: {
-      problem: "Bar and restaurant chains needed a unified, multi-tenant platform to seamlessly integrate POS operations, complex supply chains, and multi-branch management without performance degradation under heavy load.",
-      role: "Architected a modular NestJS backend utilizing PostgreSQL and Zod for robust data validation across complex relational domains. Built a high-performance Next.js frontend using React Query for server-state caching and Zustand for complex local POS state.",
-      outcome: "Deployed a highly scalable, multi-tenant enterprise system with sub-second POS operation response times and robust business intelligence dashboards.",
-    },
-  },
-  {
-    title: "eDealIndia",
-    description: "Architected a production-grade, multi-tenant e-commerce and gamification platform featuring live draw ceremonies, animated slot machines, real-time leaderboards, and a jewellery marketplace.",
-    tags: ["Next.js 16", "NestJS 11", "TypeScript", "MongoDB", "Redis"],
-    year: "2026",
-    caseStudy: {
-      problem: "Needed a gamified e-commerce platform handling live draw ceremonies with concurrent viewers and real-time leaderboard accuracy.",
-      role: "Engineered Lucky Draw and Reward Coin systems with full backend logic, Redis caching, and TanStack Query, cutting redundant API calls. Delivered a cinematic 'Digital Atelier' UI with Framer Motion and Three.js 3D components.",
-      outcome: "Improved performance at scale and maintained strict TypeScript type safety across the full stack while delivering a high-end visual experience.",
-    },
-  },
-  {
-    title: "InmarServ",
-    description: "Engineered full-stack modules for a globally deployed maritime SaaS platform managing end-to-end ship servicing operations and diversion workflows.",
-    tags: ["Next.js", "NestJS", "PostgreSQL", "MongoDB"],
-    year: "2025",
-    caseStudy: {
-      problem: "A maritime logistics company needed to digitize and track complex operational workflows, vessel diversion, and ship servicing operations globally.",
-      role: "Built REST APIs, real-time dashboards, and secure data pipelines using NestJS, PostgreSQL, and MongoDB. Translated complex operational workflows into intuitive, production-grade interfaces.",
-      outcome: "Delivered reliable, scalable features under strict production constraints in a global, mission-critical maritime operations environment.",
-    },
-  },
-  {
-    title: "Freight-IQ",
-    description: "AI-Powered Logistics SaaS for small and mid-sized Indian transport companies, covering fleet, trip, and freight management workflows.",
-    tags: ["TypeScript", "Next.js", "NestJS", "MongoDB"],
-    year: "2026",
-    caseStudy: {
-      problem: "Small to mid-sized Indian transport companies face operational pain points around trip tracking and freight visibility.",
-      role: "Designing and building the core platform by applying real-world domain knowledge from the transport industry to shape features.",
-      outcome: "Providing an AI-powered logistics platform that optimizes trip, fleet, and freight management workflows.",
-    },
-  },
-  {
-    title: "XAU-USD-Signal-Bot",
-    description: "Algorithmic XAU/USD (Gold) trading bot applying Smart Money Concepts (SMC), market structure analysis, and Fair Value Gaps (FVG).",
-    tags: ["Python", "Telegram API"],
-    year: "2026",
-    caseStudy: {
-      problem: "Needed an automated system to identify high-probability trading setups based on algorithmic logic and Smart Money Concepts.",
-      role: "Built an algorithmic trading signal bot utilizing market structure analysis and FVG to find high-probability setups.",
-      outcome: "Successfully deployed the bot on Railway for continuous operation, featuring automated signal delivery via Telegram alerts.",
-    },
-  },
-  {
-    title: "Lumina Commerce",
-    description: "High-end, editorial-style e-commerce interface driven by fluid animations, scroll interactions, and a refined visual design system.",
-    tags: ["Next.js", "TypeScript", "Framer Motion"],
-    year: "2025",
-    caseStudy: {
-      problem: "Standard e-commerce sites lack premium editorial feel and motion-first interactive experiences.",
-      role: "Focused on motion-first UI patterns using Framer Motion to create a premium, magazine-like browsing experience.",
-      outcome: "Built a high-end editorial e-commerce interface with fluid animations and a highly refined visual design system.",
-    },
-  },
-  {
-    title: "BioVoting",
-    description: "Secure, lightweight biometric voting system with election officer controls, voter registration, and real-time result viewing.",
-    tags: ["Python", "Flask", "SQLite"],
-    year: "2024",
-    caseStudy: {
-      problem: "Required a secure and easy-to-use biometric voting system with real-time tracking.",
-      role: "Built the core election workflows with an emphasis on data integrity and straightforward officer administration.",
-      outcome: "Delivered a lightweight system with secure election officer controls, voter registration, and live result viewing.",
-    },
-  },
-  {
-    title: "Stock Market Analyzer",
-    description: "Retrieves historical OHLCV data, applying technical indicators and predictive models to forecast stock prices.",
-    tags: ["Python", "yfinance", "LSTM", "Matplotlib"],
-    year: "2024",
-    caseStudy: {
-      problem: "Needed to analyze historical stock data and forecast prices using technical indicators and machine learning models.",
-      role: "Retrieved and analyzed historical OHLCV data, applying technical indicators and predictive models including Linear Regression and LSTM.",
-      outcome: "Successfully simulated trading strategies and visualized model performance metrics.",
-    },
-  }
-];
-
-/* ── Case Study Modal ─────────────────────────────────── */
-function CaseStudyModal({ project, onClose }: { project: ProjectData; onClose: () => void }) {
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", handleEsc);
-    document.body.style.overflow = "hidden";
-    return () => { document.removeEventListener("keydown", handleEsc); document.body.style.overflow = ""; };
-  }, [onClose]);
-
-  return (
-    <motion.div className="fixed inset-0 z-200 flex items-center justify-center"
-      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}>
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-foreground/60 backdrop-blur-sm" onClick={onClose} />
-
-      {/* Modal */}
-      <motion.div
-        className="relative w-[90vw] max-w-3xl max-h-[85vh] overflow-y-auto bg-background rounded-2xl p-8 md:p-12 z-10"
-        initial={{ y: 40, scale: 0.95, opacity: 0 }}
-        animate={{ y: 0, scale: 1, opacity: 1 }}
-        exit={{ y: 20, scale: 0.98, opacity: 0 }}
-        transition={{ duration: 0.4, ease: EASE }}>
-        <button onClick={onClose}
-          className="absolute top-4 right-4 w-10 h-10 rounded-full bg-surface flex items-center justify-center hover:bg-foreground hover:text-background transition-colors">
-          <X size={18} />
-        </button>
-
-        <div className="flex items-baseline gap-4 mb-2">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{project.title}</h2>
-          <span className="text-sm font-mono text-muted">{project.year}</span>
-        </div>
-
-        <div className="flex flex-wrap gap-2 mb-8">
-          {project.tags.map((tag) => (
-            <span key={tag} className="text-xs font-medium border border-surface px-3 py-1 rounded-full text-muted">{tag}</span>
-          ))}
-        </div>
-
-        <div className="space-y-8">
-          <div>
-            <h3 className="text-xs font-mono uppercase tracking-widest text-accent mb-3">Problem</h3>
-            <p className="text-muted leading-relaxed">{project.caseStudy.problem}</p>
-          </div>
-          <div>
-            <h3 className="text-xs font-mono uppercase tracking-widest text-accent mb-3">My Role &amp; Approach</h3>
-            <p className="text-muted leading-relaxed">{project.caseStudy.role}</p>
-          </div>
-          <div>
-            <h3 className="text-xs font-mono uppercase tracking-widest text-accent mb-3">Outcome</h3>
-            <p className="text-muted leading-relaxed">{project.caseStudy.outcome}</p>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-/* ── Divider ──────────────────────────────────────────── */
-function AnimatedDivider() {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-  return (
-    <div ref={ref} className="w-full overflow-hidden">
-      <motion.div className="h-px bg-surface"
-        initial={{ scaleX: 0 }} animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
-        transition={{ duration: 0.8, ease: EASE }} style={{ transformOrigin: "left" }} />
-    </div>
-  );
-}
-
-/* ── Project Card ─────────────────────────────────────── */
-function ProjectCard({ project, index, onOpen }: { project: ProjectData; index: number; onOpen: () => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [hovering, setHovering] = useState(false);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const labelX = useSpring(0, { stiffness: 200, damping: 20 });
-  const labelY = useSpring(0, { stiffness: 200, damping: 20 });
-
-  useEffect(() => { labelX.set(mouse.x); labelY.set(mouse.y); }, [mouse.x, mouse.y, labelX, labelY]);
-
-  return (
-    <>
-      <motion.div ref={ref} data-cursor-hover
-        className="group relative py-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 cursor-pointer"
-        initial={{ y: 40, opacity: 0 }}
-        animate={inView ? { y: 0, opacity: 1 } : { y: 40, opacity: 0 }}
-        transition={{ duration: 0.7, delay: index * 0.15, ease: EASE }}
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-        onMouseMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
-        onClick={onOpen}
-      >
-        <div className="w-full md:w-2/3">
-          <div className="flex items-center gap-4 mb-4">
-            <motion.h3 className="text-3xl md:text-4xl font-bold tracking-tight transition-colors duration-300"
-              animate={{ scale: hovering ? 1.02 : 1, color: hovering ? "var(--color-accent)" : "var(--color-foreground)" }}
-              transition={{ duration: 0.25 }}>
-              {project.title}
-            </motion.h3>
-            <span className="text-sm font-mono text-muted">{project.year}</span>
-          </div>
-          <p className="text-lg text-muted mb-6 leading-[1.6]">{project.description}</p>
-          <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag, ti) => (
-              <motion.span key={tag} className="text-xs font-medium border border-surface text-muted px-3 py-1 rounded-full"
-                animate={hovering ? { y: -2 } : { y: 0 }}
-                transition={{ delay: ti * 0.03, type: "spring", stiffness: 300, damping: 15 }}>
-                {tag}
-              </motion.span>
-            ))}
-          </div>
-        </div>
-        <motion.div className="hidden md:flex gap-4"
-          animate={{ opacity: hovering ? 1 : 0, x: hovering ? 0 : -16 }}
-          transition={{ duration: 0.3, ease: EASE }}>
-          <div className="w-12 h-12 rounded-full border border-surface flex items-center justify-center hover:bg-foreground hover:text-background transition-colors">
-            <ExternalLink size={18} />
-          </div>
-        </motion.div>
-      </motion.div>
-
-      {hovering && (
-        <motion.div className="fixed top-0 left-0 pointer-events-none z-100"
-          style={{ x: labelX, y: labelY }}
-          initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.5, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}>
-          <div className="bg-foreground text-background text-sm font-medium px-4 py-2 rounded-full -translate-x-1/2 -translate-y-1/2 whitespace-nowrap">
-            View Case Study →
-          </div>
-        </motion.div>
-      )}
-
-      <AnimatedDivider />
-    </>
-  );
-}
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export default function Projects() {
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const headingInView = useInView(headingRef, { once: true, margin: "-100px" });
-  const [activeProject, setActiveProject] = useState<number | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
+  const runningRef = useRef(true);
+  const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
+  const particlesRef = useRef<Particle[]>([]);
+  const grainCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const frameCountRef = useRef(0);
 
+  const mouseRef = useRef({ x: -100, y: -100 });
+  const smoothMouseRef = useRef({ x: -100, y: -100 });
+  const smoothTiltRef = useRef({ x: 0, y: 0 });
+  const cursorRef = useRef({ x: -100, y: -100 });
+
+  const [activeProject, setActiveProject] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  const activeRef = useRef(0);
+  const transitionRef = useRef({
+    progress: 1, from: 0, to: 0, startTime: 0,
+  });
+
+  // Sync state to ref
+  useEffect(() => { activeRef.current = activeProject; }, [activeProject]);
+
+  // Touch detection
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check(); window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Image preloading
+  useEffect(() => {
+    let mounted = true;
+    const imgs: (HTMLImageElement | null)[] = [];
+    let loaded = 0;
+    PROJECTS.forEach((p, i) => {
+      const img = new Image();
+      img.src = p.screenshot;
+      img.onload = () => { imgs[i] = img; loaded++; if (loaded === PROJECTS.length && mounted) { imagesRef.current = imgs; setImagesLoaded(true); } };
+      img.onerror = () => { imgs[i] = null; loaded++; if (loaded === PROJECTS.length && mounted) { imagesRef.current = imgs; setImagesLoaded(true); } };
+    });
+    // Timeout fallback
+    const t = setTimeout(() => { if (mounted && !imagesLoaded) { imagesRef.current = imgs; setImagesLoaded(true); } }, 3000);
+    return () => { mounted = false; clearTimeout(t); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Canvas setup + animation loop
+  useEffect(() => {
+    if (isMobile) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // CRITICAL: Reset running flag so the loop survives effect re-runs
+    runningRef.current = true;
+
+    // Grain canvas
+    const gc = document.createElement("canvas");
+    gc.width = 200; gc.height = 150;
+    grainCanvasRef.current = gc;
+
+    let w = 0, h = 0;
+    const dprCap = Math.min(window.devicePixelRatio || 1, 2);
+
+    const resize = () => {
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dprCap; 
+      canvas.height = h * dprCap;
+      canvas.style.width = w + "px"; 
+      canvas.style.height = h + "px";
+      ctx.setTransform(dprCap, 0, 0, dprCap, 0, 0);
+      particlesRef.current = createParticles(w, h);
+    };
+
+    window.addEventListener("resize", resize);
+    resize();
+
+    // Mouse tracking
+    const onMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    };
+    canvas.addEventListener("mousemove", onMove);
+
+    // Scroll tracking for project transitions
+    const onScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const scrollY = -rect.top;
+      const totalScroll = rect.height - window.innerHeight;
+      
+      if (scrollY >= 0 && scrollY <= totalScroll) {
+        const progress = scrollY / totalScroll;
+        const maxIndex = PROJECTS.length - 1;
+        // Calculate the nearest project based on scroll progress
+        let targetIndex = Math.min(maxIndex, Math.max(0, Math.round(progress * maxIndex)));
+        
+        if (targetIndex !== activeRef.current) {
+          transitionRef.current = { 
+            progress: 0, 
+            from: activeRef.current, 
+            to: targetIndex, 
+            startTime: performance.now() 
+          };
+          setActiveProject(targetIndex);
+        }
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const render = (time: number) => {
+      if (!runningRef.current) return;
+      frameCountRef.current++;
+      ctx.clearRect(0, 0, w, h);
+
+      // Background
+      ctx.fillStyle = "#0C0B09";
+      ctx.fillRect(0, 0, w, h);
+
+      const active = activeRef.current;
+      const proj = PROJECTS[active];
+      const accent = proj.accent;
+
+      // Smooth mouse
+      smoothMouseRef.current.x = lerp(smoothMouseRef.current.x, mouseRef.current.x, 0.08);
+      smoothMouseRef.current.y = lerp(smoothMouseRef.current.y, mouseRef.current.y, 0.08);
+
+      // Tilt (sanitized to prevent NaN canvas matrix corruption)
+      const rawTiltX = isNaN(w) || w === 0 ? 0 : Math.max(-0.8, Math.min(0.8, (smoothMouseRef.current.x - w / 2) / (w / 2)));
+      const rawTiltY = isNaN(h) || h === 0 ? 0 : Math.max(-0.8, Math.min(0.8, (smoothMouseRef.current.y - h / 2) / (h / 2)));
+      smoothTiltRef.current.x = lerp(smoothTiltRef.current.x, rawTiltX || 0, 0.06);
+      smoothTiltRef.current.y = lerp(smoothTiltRef.current.y, rawTiltY || 0, 0.06);
+      const tX = smoothTiltRef.current.x || 0;
+      const tY = smoothTiltRef.current.y || 0;
+
+      // Cursor smoothing
+      cursorRef.current.x = lerp(cursorRef.current.x, mouseRef.current.x, 0.1);
+      cursorRef.current.y = lerp(cursorRef.current.y, mouseRef.current.y, 0.1);
+
+      // Vignette
+      drawVignette(ctx, w, h);
+
+      // Device center & dimensions — large and prominent like the reference
+      const devCX = w * 0.58;
+      const devCY = h * 0.40;
+      const devW = Math.min(w * 0.55, 900);
+      const phoneW = Math.min(w * 0.065, 80);
+      const phoneCX = devCX + devW * 0.56;
+      const phoneCY = devCY - devW * 0.08;
+
+      // Accent glow (scaled to match bigger device)
+      drawAccentGlow(ctx, devCX, devCY, accent);
+
+      // Particles
+      ctx.save();
+      drawParticles(ctx, particlesRef.current, w, h, accent, time * 0.001);
+      ctx.restore();
+
+      // Simple safe offset instead of complex matrix transform
+      const offsetX = tX * -15;
+      const offsetY = tY * -25;
+
+      // Transition state
+      const tr = transitionRef.current;
+      if (tr.progress < 1) {
+        const elapsed = (time - tr.startTime) / 450;
+        tr.progress = Math.min(1, elapsed);
+        const p = easeInOutCubic(tr.progress);
+
+        // Draw outgoing
+        ctx.save();
+        ctx.translate(devCX + offsetX, devCY + offsetY);
+        drawMacBook(ctx, 0, 0, devW, imagesRef.current[tr.from] || null, PROJECTS[tr.from].accent, 1 - p, 1 - p * 0.06);
+        ctx.restore();
+
+        // Draw incoming
+        ctx.save();
+        ctx.translate(devCX + offsetX, devCY + offsetY);
+        drawMacBook(ctx, 0, 0, devW, imagesRef.current[tr.to] || null, PROJECTS[tr.to].accent, p, 0.94 + p * 0.06);
+        ctx.restore();
+      } else {
+        // Static draw
+        ctx.save();
+        ctx.translate(devCX + offsetX, devCY + offsetY);
+        drawMacBook(ctx, 0, 0, devW, imagesRef.current[active] || null, accent, 1, 1);
+        ctx.restore();
+      }
+
+      // iPhone
+      const iphoneOffsetX = tX * -8;
+      const iphoneOffsetY = tY * -12;
+      ctx.save();
+      ctx.translate(phoneCX + iphoneOffsetX, phoneCY + iphoneOffsetY);
+      drawIPhone(ctx, 0, 0, phoneW, time * 0.001, accent, tX, tY);
+      ctx.restore();
+
+      // Film grain (every 5 frames)
+      if (frameCountRef.current % 5 === 0 && grainCanvasRef.current) {
+        drawGrain(grainCanvasRef.current);
+      }
+      if (grainCanvasRef.current) {
+        ctx.save();
+        ctx.globalAlpha = 0.025;
+        ctx.drawImage(grainCanvasRef.current, 0, 0, w, h);
+        ctx.restore();
+      }
+
+      // Progress dots
+      ctx.save();
+      drawProgressDots(ctx, active, PROJECTS.length, w * 0.05, h * 0.9, accent);
+      ctx.restore();
+
+      // Custom cursor (only if mouse is on canvas)
+      if (mouseRef.current.x > 0 && mouseRef.current.y > 0 &&
+          mouseRef.current.x < w && mouseRef.current.y < h) {
+        drawCursor(ctx, cursorRef.current.x, cursorRef.current.y, accent);
+      }
+
+      // Loading state — check ref directly so it updates without effect re-run
+      const anyImageLoaded = imagesRef.current.some(img => img && img.complete && img.naturalWidth > 0);
+      if (!anyImageLoaded) {
+        ctx.save();
+        ctx.fillStyle = '#77746E';
+        ctx.font = '11px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText('Loading assets...', w / 2, h - 30);
+        ctx.restore();
+      }
+
+      rafRef.current = requestAnimationFrame(render);
+    };
+
+    rafRef.current = requestAnimationFrame(render);
+
+    return () => {
+      runningRef.current = false;
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("scroll", onScroll);
+      canvas.removeEventListener("mousemove", onMove);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile]);
+
+  const proj = PROJECTS[activeProject];
+
+  // ── MOBILE FALLBACK ──
+  if (isMobile) {
+    return (
+      <section id="projects" className="px-5 py-20" style={{ background: '#0C0B09' }}>
+        <p style={{ fontFamily: 'monospace', fontSize: 10, color: '#77746E', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 32 }}>
+          SELECTED WORK
+        </p>
+        <div style={{ display: 'grid', gap: 20 }}>
+          {PROJECTS.map((p) => (
+            <a key={p.num} href={p.link} target="_blank" rel="noopener noreferrer"
+              style={{
+                display: 'block', borderRadius: 16,
+                border: `1px solid ${p.accent}33`,
+                background: '#131210', padding: 24,
+                textDecoration: 'none', position: 'relative', overflow: 'hidden',
+              }}>
+              <div style={{ width: '100%', height: 3, background: p.accent, borderRadius: 2, marginBottom: 16 }} />
+              <span style={{ fontFamily: 'monospace', fontSize: 10, color: p.accent }}>{p.num}</span>
+              <h3 style={{ color: '#F5F3EE', fontSize: 22, fontWeight: 500, margin: '6px 0 4px', letterSpacing: '-0.03em' }}>{p.name}</h3>
+              <p style={{ color: '#77746E', fontSize: 12, margin: '0 0 12px' }}>{p.role}</p>
+              <p style={{ color: '#77746E', fontSize: 11, lineHeight: 1.6, marginBottom: 14 }}>{p.desc}</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {p.stack.map((s) => (
+                  <span key={s} style={{
+                    fontSize: 10, fontFamily: 'monospace',
+                    border: `1px solid ${p.accent}44`, color: p.accent,
+                    padding: '3px 8px', borderRadius: 99,
+                  }}>{s}</span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  // ── DESKTOP CANVAS ──
   return (
-    <section id="projects" className="px-6 md:px-12 lg:px-24 py-[100px] bg-background">
-      <motion.h2 ref={headingRef} className="text-4xl md:text-5xl font-bold tracking-tight mb-16"
-        initial={{ y: 30, opacity: 0 }}
-        animate={headingInView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
-        transition={{ duration: 0.7, ease: EASE }}>
-        Selected Work
-      </motion.h2>
-      <div className="flex flex-col">
-        {projects.map((p, i) => (
-          <ProjectCard key={i} project={p} index={i} onOpen={() => setActiveProject(i)} />
-        ))}
-      </div>
+    <section id="projects" ref={sectionRef} style={{ position: 'relative', height: '500vh' }}>
+      {/* Section label (scrolls away) */}
+      <p style={{
+        fontFamily: 'monospace', fontSize: 10, color: '#77746E',
+        letterSpacing: '0.2em', textTransform: 'uppercase',
+        padding: '40px 5%', position: 'relative', zIndex: 5,
+      }}>
+        SELECTED WORK
+      </p>
 
-      <AnimatePresence>
-        {activeProject !== null && (
-          <CaseStudyModal project={projects[activeProject]} onClose={() => setActiveProject(null)} />
-        )}
-      </AnimatePresence>
+      {/* Sticky container */}
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden' }}>
+        {/* Canvas */}
+        <div style={{ position: 'absolute', inset: 0 }}>
+          <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', cursor: 'none' }} />
+        </div>
+
+        {/* Left info overlay */}
+        <div style={{
+          position: 'absolute', left: '5%', top: '50%', transform: 'translateY(-50%)',
+          zIndex: 10, pointerEvents: 'none', maxWidth: 320,
+        }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeProject}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: EASE }}
+            >
+              {/* Number */}
+              <span style={{ fontFamily: 'monospace', fontSize: 11, color: proj.accent }}>{proj.num}</span>
+              {/* Accent line */}
+              <div style={{ width: 40, height: 1.5, background: proj.accent, margin: '8px 0' }} />
+              {/* Name */}
+              <h2 style={{
+                fontSize: 'clamp(28px, 4.5vw, 44px)', fontWeight: 500,
+                color: '#F5F3EE', letterSpacing: '-0.03em', margin: 0, lineHeight: 1.1,
+              }}>{proj.name}</h2>
+              {/* Role */}
+              <p style={{ fontSize: 13, color: '#77746E', margin: '6px 0 0' }}>{proj.role}</p>
+              {/* Year pill */}
+              <span style={{
+                display: 'inline-block', marginTop: 10,
+                fontSize: 10, fontFamily: 'monospace',
+                color: proj.accent,
+                background: proj.accent + '1A',
+                border: `1px solid ${proj.accent}4D`,
+                padding: '3px 10px', borderRadius: 99,
+              }}>{proj.year}</span>
+              {/* Desc */}
+              <p style={{
+                fontSize: 12, color: '#77746E', maxWidth: 280,
+                marginTop: 12, lineHeight: 1.6,
+              }}>{proj.desc}</p>
+              {/* Stack pills */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 10 }}>
+                {proj.stack.map(s => (
+                  <span key={s} style={{
+                    fontSize: 9, fontFamily: 'monospace', color: '#B8B4AC',
+                    border: '1px solid rgba(245,243,238,0.10)',
+                    padding: '2px 7px', borderRadius: 99,
+                  }}>{s}</span>
+                ))}
+              </div>
+              {/* Scroll hint */}
+              <p style={{
+                fontSize: 9, fontFamily: 'monospace', color: '#77746E',
+                marginTop: 20, letterSpacing: '0.1em',
+              }}>SCROLL TO NAVIGATE ↕</p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Bottom-right action buttons */}
+        <div style={{
+          position: 'absolute', bottom: 32, right: '5%', zIndex: 15,
+          display: 'flex', gap: 10,
+        }}>
+          <a href={proj.link} target="_blank" rel="noopener noreferrer"
+            style={{
+              fontFamily: 'monospace', fontSize: 11, color: proj.accent,
+              border: `1px solid ${proj.accent}66`,
+              padding: '8px 16px', borderRadius: 6,
+              textDecoration: 'none', transition: 'all 0.2s',
+              background: 'rgba(0,0,0,0.4)',
+            }}
+            onMouseEnter={e => { (e.target as HTMLElement).style.background = proj.accent + '22'; }}
+            onMouseLeave={e => { (e.target as HTMLElement).style.background = 'rgba(0,0,0,0.4)'; }}
+          >View on GitHub →</a>
+          <a href={proj.link} target="_blank" rel="noopener noreferrer"
+            style={{
+              fontFamily: 'monospace', fontSize: 11, color: proj.accent,
+              border: `1px solid ${proj.accent}66`,
+              padding: '8px 16px', borderRadius: 6,
+              textDecoration: 'none', transition: 'all 0.2s',
+              background: 'rgba(0,0,0,0.4)',
+            }}
+            onMouseEnter={e => { (e.target as HTMLElement).style.background = proj.accent + '22'; }}
+            onMouseLeave={e => { (e.target as HTMLElement).style.background = 'rgba(0,0,0,0.4)'; }}
+          >Live Demo →</a>
+        </div>
+      </div>
     </section>
   );
 }

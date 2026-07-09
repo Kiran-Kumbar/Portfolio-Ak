@@ -17,6 +17,7 @@ export default function Home() {
         <About />
         <Experience />
         <NowBlock />
+        <Showreel />
         <Projects />
         <Contact />
       </main>
