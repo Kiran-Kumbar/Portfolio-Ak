@@ -39,8 +39,8 @@ export default function ResumePage() {
 
           {/* Download Button */}
           <a 
-            href="/Kiran_Kumbar_Resume1.pdf" 
-            download="Kiran_Kumbar_Resume1.pdf"
+            href="/Kiran_Kumbar_Resume_01.pdf" 
+            download="Kiran_Kumbar_Resume_01.pdf"
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#C8B89A] text-black hover:bg-[#b0a083] transition-colors text-sm font-semibold shadow-lg"
           >
             <DownloadIcon size={16} />
@@ -54,7 +54,7 @@ export default function ResumePage() {
         <iframe 
           ref={iframeRef}
           id="pdf-iframe"
-          src="/Kiran_Kumbar_Resume1.pdf" 
+          src="/Kiran_Kumbar_Resume_01.pdf" 
           className="absolute inset-0 w-full h-full border-none"
           title="Resume PDF"
         />
